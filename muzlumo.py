@@ -1,6 +1,6 @@
 import pyaudio
 import audioop
-import pygame
+import pygame, sys
 import colorsys
 
 def map( x,  in_min,  in_max,  out_min,  out_max):
@@ -13,7 +13,10 @@ def main():
     inpBlockSize = 1024
 
     pygame.init()
-    screen = pygame.display.set_mode((200,200))
+    if ("-f" in sys.argv):
+        screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+    else:
+        screen = pygame.display.set_mode((200,200))
     audio = pyaudio.PyAudio()
     clock = pygame.time.Clock()
     pygame.display.update()
