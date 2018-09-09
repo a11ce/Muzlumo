@@ -1,5 +1,6 @@
 import pyaudio
-import audioop
+import aubio
+import numpy as np
 import pygame, sys
 import colorsys
 
@@ -10,7 +11,7 @@ def main():
 
     audio = pyaudio.PyAudio()
 
-    inpFormat = pyaudio.paInt16
+    inpFormat = pyaudio.paFloat32
     inpChannels = 1
     inpRate = int(audio.get_device_info_by_index(0)['defaultSampleRate'])
     inpBlockSize = 1024
@@ -29,15 +30,18 @@ def main():
                             channels=inpChannels,
                             rate=inpRate,
                             input=True)
-    maxVol = 10
+    maxVol = 0
     while True:
         for e in pygame.event.get():
             if ((e.type == pygame.KEYDOWN) and (e.key == pygame.K_q)):
                 sys.exit()
 
         data = inpStream.read(inpBlockSize)
-        volume = audioop.rms(data, 2)
-        if (volume == 0): maxVol = 1
+        aubioData = np.fromstring(data, dtype=aubio.float_type)
+
+        volume = np.sum(aubioData**2)/len(aubioData)
+        print(volume)
+        if (volume == 0): maxVol = 0
         if (volume>maxVol): maxVol = volume
         volMapDec = map(volume,0,maxVol,0,100)/100.0
         color = colorsys.hsv_to_rgb(0.9, 1, volMapDec)
