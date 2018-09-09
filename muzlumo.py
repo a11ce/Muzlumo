@@ -23,14 +23,15 @@ def main():
                             channels=inpChannels,
                             rate=inpRate,
                             input=True)
-
+    maxVol = 10
     while True:
         pygame.event.pump()
 
         data = inpStream.read(inpBlockSize)
         volume = audioop.rms(data, 2)
-
-        volMapDec = map(volume,0,9000,0,100)/100.0
+        if (volume == 0): maxVol = 1
+        if (volume>maxVol): maxVol = volume
+        volMapDec = map(volume,0,maxVol,0,100)/100.0
         color = colorsys.hsv_to_rgb(0.9, 1, volMapDec)
         color = tuple(int(round(map(i,0.0,1.0,0.0,255.0 )))for i in color)
         print(color)
