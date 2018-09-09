@@ -7,9 +7,12 @@ def map( x,  in_min,  in_max,  out_min,  out_max):
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 
 def main():
+
+    audio = pyaudio.PyAudio()
+
     inpFormat = pyaudio.paInt16
     inpChannels = 1
-    inpRate = 44100
+    inpRate = int(audio.get_device_info_by_index(0)['defaultSampleRate'])
     inpBlockSize = 1024
 
     pygame.init()
@@ -17,7 +20,7 @@ def main():
         screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
     else:
         screen = pygame.display.set_mode((200,200))
-    audio = pyaudio.PyAudio()
+
     clock = pygame.time.Clock()
     pygame.display.update()
 
