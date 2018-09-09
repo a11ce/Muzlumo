@@ -31,7 +31,9 @@ def main():
                             input=True)
     maxVol = 10
     while True:
-        pygame.event.pump()
+        for e in pygame.event.get():
+            if ((e.type == pygame.KEYDOWN) and (e.key == pygame.K_q)):
+                sys.exit()
 
         data = inpStream.read(inpBlockSize)
         volume = audioop.rms(data, 2)
