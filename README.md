@@ -3,7 +3,7 @@
 A simple music visualizer.
 
 
-### Prerequisites
+## Prerequisites
 
 You need python3, [PyAudio](https://people.csail.mit.edu/hubert/pyaudio/), [aubio](https://aubio.org/), [Numpy](http://www.numpy.org/), and [PyGame](https://www.pygame.org).
 
@@ -11,7 +11,7 @@ You need python3, [PyAudio](https://people.csail.mit.edu/hubert/pyaudio/), [aubi
 pip3 install pyaudio aubio numpy pygame
 ```
 
-### Usage
+## Usage
 
 Muzlumo will listen with the microphone, route your computer's output to the input while monitoring it to have it work on the computer's output. If you're on macOS, try Soundflower or Loopback.
 
